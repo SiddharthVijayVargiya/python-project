@@ -1,0 +1,82 @@
+# Create a text file with the binary search notes
+
+content = """
+Binary Search Algorithm
+
+Binary search is an efficient algorithm for finding an item from a sorted 
+list of elements. It works by repeatedly dividing the 
+search interval in half.
+If the value of the search key is less than the item in the
+middle of the interval, it narrows the interval to the lower half. 
+Otherwise, it narrows it to the upper half. The process continues until
+the value is found or the interval is empty.
+
+Steps:
+
+1. Set two pointers:
+   - low at the beginning of the list.
+   - high at the end of the list.
+
+2. Find the middle element:
+   - Calculate the middle index using the formula:
+     mid = (low + high) // 2
+
+3. Compare the middle element with the target:
+   - If the middle element equals the target, return its index.
+   - If the target is smaller than the middle element, set high = mid - 1 and 
+   repeat the process on the left half.
+   - If the target is larger than the middle element, set low = mid + 1 and 
+   repeat the process on the right half.
+
+4. Stop condition:
+   - If low exceeds high, the target is not present in the list.
+
+Time Complexity:
+
+- Best case: O(1) – If the middle element is the target.
+- Average case: O(log n) – The list is halved each time, so 
+the time complexity is logarithmic.
+- Worst case: O(log n) – Even in the worst scenario, the number of
+ elements processed is reduced exponentially.
+
+Space Complexity:
+
+- O(1) – Binary search is an in-place algorithm, using only a 
+few variables to track the pointers.
+
+Code Implementation (Python):
+
+```python
+def binary_search(arr, target):
+    # Initialize the two pointers
+    low, high = 0, len(arr) - 1
+    
+    while low <= high:
+        # Find the middle element
+        mid = (low + high) // 2
+        
+        # Compare middle element with target
+        if arr[mid] == target:
+            return mid  # Target found at index mid
+        
+        # Target is smaller than middle element, search in the left half
+        elif target < arr[mid]:
+            high = mid - 1
+        
+        # Target is larger, search in the right half
+        else:
+            low = mid + 1
+    
+    # Target not found
+    return -1
+
+# Example usage:
+arr = [2, 3, 4, 10, 40]
+target = 10
+
+result = binary_search(arr, target)
+
+if result != -1:
+    print(f"Element is present at index {result}")
+else:
+    print("Element is not present in the array")

@@ -1,0 +1,28 @@
+
+How the Variable-Size Sliding Window Works:
+
+1. Two pointers:
+   - Left pointer (left): Initially starts at the beginning of the array (index 0).
+   - Right pointer (right): Also starts at the beginning and moves to the right to expand the window.
+
+2. Window size:
+   - The size of the window is the distance between left and right pointers (i.e., right - left + 1).
+   - In this case, the window size is dynamic, meaning it can expand and shrink as needed.
+
+3. Move right pointer first:
+   - The right pointer moves to the right to expand the window, adding more elements to the current
+    window sum or comparison.
+   - This process continues until you reach a condition that requires shrinking the window.
+
+4. Move left pointer afterward (shrinking the window):
+   - When a certain condition (like reaching or exceeding a target sum s) is met, you
+    start shrinking the window by moving
+    the left pointer to the right.
+   - Shrinking the window helps to find the smallest or optimal subarray 
+     that still satisfies the condition.
+
+5. Imaginary thing (like sum or comparison):
+   - Typically, we keep a variable like window_sum to store the sum of the elements inside the window
+    (the subarray between left and right pointers).
+   - This is what we compare against the target (for example, checking 
+    if the window_sum is greater than or equal to a target s).
