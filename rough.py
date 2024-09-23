@@ -151,5 +151,41 @@ print(longest_substring_prefix(arr))'''
         window_sum += arr[right]
         while S>= window_Sum:'''
         
-lst = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-print(lst[::3])
+'''lst = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+print(lst[::3])'''
+import re
+import json
+
+# Function to clean and convert WhatsApp chat to desired format
+def parse_whatsapp_chat(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        chat_data = f.readlines()
+
+    conversation = []
+    parsed_data = []
+
+    # Regex to match chat lines (adjust based on your chat format)
+    message_pattern = re.compile(r"^\d{1,2}/\d{1,2}/\d{2}, \d{1,2}:\d{2} [AP]M - (.*?): (.*)$")
+    
+    for line in chat_data:
+        match = message_pattern.match(line)
+        if match:
+            sender, message = match.groups()
+            
+            # Add messages to conversation history
+            conversation.append(f"{sender}: {message}")
+
+            # Create a new entry when we have both User and Friend message
+            if len(conversation) >= 2:
+                parsed_data.append({
+                    "conversation": " <sep> ".join(conversation[:-1]),  # conversation history (all but last)
+                    "response": conversation[-1]  # the latest response
+                })
+                conversation = [conversation[-1]]  # Keep the latest message for context
+    
+    # Save the parsed data to a JSON file
+    with open('whatsapp_conversations.json', 'w', encoding='utf-8') as outfile:
+        json.dump(parsed_data, outfile, ensure_ascii=False, indent=4)
+
+# Usage
+parse_whatsapp_chat('your_whatsapp_chat.txt')
